@@ -47,3 +47,21 @@ exports.user_delete = function(req, res, next) {
     });
   })
 };
+
+exports.user_update = async function(req, res, next) {
+  try {
+    var user = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, function(err, user) {
+      if (err) return next(err);
+    });
+    return res.json({
+      message: 'User Updated.',
+      user
+    });
+  } catch (err) {
+    return next(err)
+  }
+
+
+};
