@@ -14,6 +14,8 @@ let UserSchema = new Schema({
   },
   token: {
     type: String,
+    max:5,
+    min:5
   },
   authenticated: {
     type: Boolean,

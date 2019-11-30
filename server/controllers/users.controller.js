@@ -2,11 +2,14 @@ var express = require('express')
 var router = express.Router();
 const User = require('../models/users.js');
 const mongo = require("mongoose");
+const bcrypt = require("bcryptjs");
+var randomToken = required("randomstring");
 
 //User login controller--------------------------------------------------
 exports.user_register = function(req,res){
+  bcrypt.hash(req.body.password,10, function(err,hash){
   var username = req.body.username;
-  var password = req.body.password;
+  var password = hash;
 
   var newuser = new User();
   newuser.username = username;
@@ -20,6 +23,7 @@ exports.user_register = function(req,res){
     }
     return res.status(200).send();
   })
+});
 }
 
 exports.user_login = function(req,res) {
@@ -33,6 +37,7 @@ exports.user_login = function(req,res) {
     }
     if(!user){
       return res.status(404).send();
+
     }
     return res.status(200).send();
   })

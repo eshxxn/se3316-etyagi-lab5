@@ -11,7 +11,8 @@ let ReviewSchema = new Schema({
   rating: {
     type: Number,
     required: true,
-    max: 5
+    max: 5,
+    min: 1
   },
   songname: {
     type: String,
