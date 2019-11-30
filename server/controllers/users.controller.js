@@ -1,12 +1,16 @@
 var express = require('express')
 var router = express.Router();
 const User = require('../models/users.js');
+const Token = require('../models/tokens.js');
 const mongo = require("mongoose");
 const bcrypt = require("bcryptjs");
-var randomToken = required("randomstring");
+var randomToken = require("randomstring");
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
 
 //User login controller--------------------------------------------------
 exports.user_register = function(req,res){
+  const token = randomToken.generate();
   bcrypt.hash(req.body.password,10, function(err,hash){
   var username = req.body.username;
   var password = hash;
@@ -15,6 +19,23 @@ exports.user_register = function(req,res){
   newuser.username = username;
   newuser.password = password;
   newuser.authenticated = false;
+  newuser.token = token;
+
+  // Create a verification token for this user
+       var token = new Token({ _userId: newuser._id, token: crypto.randomBytes(16).toString('hex') });
+
+       // Save the verification token
+       token.save(function (err) {
+           if (err) { return res.status(500).send({ msg: err.message }); }
+
+           // Send the email
+           var transporter = nodemailer.createTransport({ host:'smtp.live.com',port:465,secure:true,service: 'hotmail', auth: { user: "eshaan98@hotmail.com", pass: "eshaan24" } });
+           var mailOptions = { from: 'eshaan98@hotmail.com', to: newuser.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
+           transporter.sendMail(mailOptions, function (err) {
+               if (err) { return res.status(500).send({ msg: err.message }); }
+               res.status(200).send('A verification email has been sent to ' + newuser.email + '.');
+             });
+  });
 
   newuser.save(function(err, savedUser){
     if(err){

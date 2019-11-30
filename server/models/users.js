@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var unique = require('mongoose-unique-validator');
 
 let UserSchema = new Schema({
   username: {
@@ -23,5 +24,6 @@ let UserSchema = new Schema({
   },
 });
 
+UserSchema.plugin(unique);
 // Export the song model
 module.exports = mongoose.model('myUser', UserSchema);

@@ -77,3 +77,34 @@ exports.review_getAll = function(req, res, next) {
     });
   });
 }
+
+exports.review_retrieveSongReviews = function(req, res){
+  let retrieveReviews = {};
+  review.find({songname: req.body.songname}, function(err,Songs){
+    if (err){
+      res.send("Reviews could not be found due to an error")
+    }
+    if (!Songs){
+      res.send("The song could not be found")
+    }
+    Songs.forEach(songname => {
+      retrieveReviews[songname._id] = songname;
+    })
+  })
+};
+
+exports.review_songRatings = function(req,res){
+  let retrieveRatings = {};
+  review.find({songname: req.body.songname}, function(err,songs){
+    if (err){
+      res.send("Reviews could not be found due to an error")
+    }
+    if (!songs){
+      res.send("The song could not be found")
+    }
+    songs.forEach(songname => {
+      retrieveRatings[songname._id] = rating;
+    })
+    res.send(retrieveRatings)
+  })
+};

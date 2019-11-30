@@ -13,4 +13,6 @@ router.get('/all', controller.review_getAll); //read all items !!!
 router.get('/:id', controller.review_details); //read item  !!!
 router.put('/:id', controller.review_update); //update existing item OKKK
 router.delete('/:id', controller.review_delete); //delete item from database OKKK
+router.post('/reviews', controller.review_retrieveSongReviews);
+router.post('/ratings', controller.review_songRatings);
 module.exports = router;

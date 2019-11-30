@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use("/song", require("./routes/songs.route.js"));
 app.use("/review", require("./routes/review.route.js"));
 app.use("/user", require("./routes/users.route.js"));
+app.use("/token", require("./routes/tokens.route.js"));
 
 app.listen(port, () => {
     console.log('Server is up and running on port number ' + port);
