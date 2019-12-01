@@ -1,1 +1,21 @@
-<p>login works!</p>
+<h1>Log in</h1>
+<form>
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <button type="submit" (click) = "login()">Login</button>
+
+  </div>
+
+  <div class="container">
+    <a href="#" routerLink="">
+    <button type="button" class="cancelbtn">Cancel</button>
+    </a>
+     <span class="psw">Don't have an account? <a href="#" routerLink="/register">Register</a></span>
+  </div>
+</form>
