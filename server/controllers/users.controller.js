@@ -51,7 +51,7 @@ exports.user_login = function(req,res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  User.findOne({username: username, password: password}, function(err,user){
+  User.findOne({username: username}, function(err,user){
     if(err){
       console.log(err);
       return res.status(500).send();
@@ -60,7 +60,19 @@ exports.user_login = function(req,res) {
       return res.status(404).send();
 
     }
-    return res.status(200).send();
+    try{
+      bcrypt.verify(user.password, password).then(success => {
+        if(success){
+          console.log("Working");
+          return res.status(200).send();
+        }
+      })
+    }
+    catch{
+      console.log("404");
+      return res.status(404).send();
+    }
+    return res.status(500).send();
   })
 }
 

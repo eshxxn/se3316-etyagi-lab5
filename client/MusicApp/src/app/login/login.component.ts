@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   login(){
-    console.log("Worked");
     var email = (<HTMLInputElement>document.getElementById("uname")).value;
     var password = (<HTMLInputElement>document.getElementById("psw")).value;
 
@@ -21,17 +20,22 @@ export class LoginComponent implements OnInit {
     http.open("POST", url);
     let body = new URLSearchParams();
 
-    body.append("uname", email);
-    body.append("psw", password);
+    body.append("username", email);
+    body.append("password", password);
     http.send(body);
 
     http.onreadystatechange = () =>{
+      console.log(http);
       if(http.status == 200){
         //this.newService.active = true;
         window.location.href = "http://localhost:4200/";
         document.getElementById("error").innerHTML = "User was signed in";
         document.getElementById("error").style.color = "green";
     }
+    if(http.status == 404){
+      console.log("Not found");
+    }
+
   }
 }
 }
