@@ -5,6 +5,7 @@ let port = 1234;
 const app = express();
 const morgan = require("morgan");
 app.use(morgan("dev"));
+//app.use(cors());
 
 // Set up a mongoose connection
 const mongoose = require('mongoose');

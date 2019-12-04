@@ -22,8 +22,13 @@ exports.user_register = function(req,res){
   newuser.token = token;
 
   // Create a verification token for this user
-       var token = new Token({ _userId: newuser._id, token: crypto.randomBytes(16).toString('hex') });
 
+       newuser.save(function(err, savedUser){
+         if(err){
+           console.log(err);
+           return res.status(500).send();
+         }
+         var token = new Token({ _userId: newuser._id, token: crypto.randomBytes(16).toString('hex') });
        // Save the verification token
        token.save(function (err) {
            if (err) { return res.status(500).send({ msg: err.message }); }
@@ -37,12 +42,7 @@ exports.user_register = function(req,res){
              });
   });
 
-  newuser.save(function(err, savedUser){
-    if(err){
-      console.log(err);
-      return res.status(500).send();
-    }
-    return res.status(200).send();
+
   })
 });
 }
@@ -60,19 +60,19 @@ exports.user_login = function(req,res) {
       return res.status(404).send();
 
     }
-    try{
-      bcrypt.verify(user.password, password).then(success => {
-        if(success){
-          console.log("Working");
-          return res.status(200).send();
-        }
-      })
-    }
-    catch{
-      console.log("404");
-      return res.status(404).send();
-    }
-    return res.status(500).send();
+    // try{
+    //   bcrypt.verify(user.password, password).then(success => {
+    //     if(success){
+    //       console.log("Working");
+    //       return res.status(200).send();
+    //     }
+    //   })
+    // }
+    // catch{
+    //   console.log("404");
+    //   return res.status(404).send();
+    // }
+    return res.status(200).send();
   })
 }
 

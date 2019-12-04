@@ -69,7 +69,7 @@ exports.song_delete = function(req, res, next) {
 };
 
 exports.song_getAll = function(req, res, next) {
-  //res.setHeader('Access-Control-Allow-Orgin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Orgin', 'http://localhost:4200');
   Song.find((err, items) => {
     if (err) {
       console.log(err);
