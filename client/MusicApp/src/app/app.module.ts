@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { SongsComponent } from './songs/songs.component';
 import { RegisterComponent } from './register/register.component';
 import {HttpClientModule} from '@angular/common/http';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import {HttpClientModule} from '@angular/common/http';
     HomeComponent,
     LoginComponent,
     SongsComponent,
-    RegisterComponent
+    RegisterComponent,
+    PrivacyComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,
